@@ -23,6 +23,7 @@ function addTodo(e){
     }
     else{
         addTodoUI(newTodo);
+        addTodoToStorage(newTodo);
         showAlert("success","Todo başarıyla eklendi...")
     }
 
@@ -55,4 +56,22 @@ function addTodoUI(newTodo){
 
     list.appendChild(listItem)
     todoInput.value="";
+}
+
+function getTodosFromStorage(){
+    let todos;
+
+    if (localStorage.getItem("todos") === null){
+        todos = [];
+    }
+    else{
+        todos = JSON.parse(localStorage.getItem("todos"));
+    }
+    return todos ;
+}
+
+function addTodoToStorage(newTodo){
+   let todos = getTodosFromStorage();
+   todos.push(newTodo);
+   localStorage.setItem("todos", JSON.stringify(todos));
 }
