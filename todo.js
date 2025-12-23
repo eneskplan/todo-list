@@ -14,7 +14,24 @@ eventListeners()
 function eventListeners(){
     todoForm.addEventListener("submit" , addTodo);
     document.addEventListener("DOMContentLoaded", loadAllTodosUI);
-    secondCardBody.addEventListener("click", deleteTodo)
+    secondCardBody.addEventListener("click", deleteTodo);
+    filterInput.addEventListener("keyup",filterTodos);
+}
+
+function filterTodos(e){
+    const filterValue = e.target.value.toLowerCase();
+    const listItems = document.querySelectorAll(".list-group-item");
+    listItems.forEach(function(listItem){
+        const text = listItem.textContent.toLowerCase();
+        if(text.indexOf(filterValue) === -1){
+            //bulamadı
+
+            listItem.setAttribute("style","display : none !important");
+        }
+        else{
+            listItem.setAttribute("style","display : block");
+        }
+    })
 }
 
 function deleteTodo(e){
