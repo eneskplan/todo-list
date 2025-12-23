@@ -19,6 +19,31 @@ function eventListeners(){
     clearAllBtn.addEventListener("click", clearAllTodos);
 }
 
+function addTodo(e){
+    const newTodo = todoInput.value.trim();
+    
+    if(newTodo === ""){
+        showAlert("danger","Lütfen bir to do giriniz");
+    }
+    else if (sameTodos()){
+        showAlert("danger","Halihazırda böyle bir todo var !")
+        todoInput.value="";
+    }
+    else{
+        addTodoUI(newTodo);
+        addTodoToStorage(newTodo);
+        showAlert("success","Todo başarıyla eklendi...")
+    }
+
+    e.preventDefault();
+}
+
+function sameTodos(){
+    const newTodo = todoInput.value.trim();
+    const todos = getTodosFromStorage();
+    return todos.includes(newTodo);
+}
+
 function clearAllTodos(){
     if(confirm("Tümünü silmek istediğinize emin misiniz ?")){
         // list.innerHTML = ""; case : slow
@@ -69,21 +94,6 @@ function loadAllTodosUI(){
     todos.forEach(function(todo){
         addTodoUI(todo);
     })
-}
-
-function addTodo(e){
-    const newTodo = todoInput.value.trim();
-    
-    if(newTodo === ""){
-        showAlert("danger","Lütfen bir to do giriniz");
-    }
-    else{
-        addTodoUI(newTodo);
-        addTodoToStorage(newTodo);
-        showAlert("success","Todo başarıyla eklendi...")
-    }
-
-    e.preventDefault();
 }
 
 function showAlert(type,message){
