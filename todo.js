@@ -16,6 +16,17 @@ function eventListeners(){
     document.addEventListener("DOMContentLoaded", loadAllTodosUI);
     secondCardBody.addEventListener("click", deleteTodo);
     filterInput.addEventListener("keyup",filterTodos);
+    clearAllBtn.addEventListener("click", clearAllTodos);
+}
+
+function clearAllTodos(){
+    if(confirm("Tümünü silmek istediğinize emin misiniz ?")){
+        // list.innerHTML = ""; case : slow
+        while(list.firstElementChild !=null) {
+            list.removeChild(list.firstElementChild);
+        }
+        localStorage.removeItem("todos");
+    }
 }
 
 function filterTodos(e){
