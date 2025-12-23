@@ -12,7 +12,35 @@ const clearAllBtn = document.querySelector("#clear-todos") // clear
 eventListeners()
 
 function eventListeners(){
-    todoForm.addEventListener("submit" ,addTodo);
+    todoForm.addEventListener("submit" , addTodo);
+    document.addEventListener("DOMContentLoaded", loadAllTodosUI);
+    secondCardBody.addEventListener("click", deleteTodo)
+}
+
+function deleteTodo(e){
+    if(e.target.className === "fa fa-remove"){
+        e.target.parentElement.parentElement.remove();
+        deleteTodoFromStorage(e.target.parentElement.parentElement.textContent)
+        showAlert("success","Başarıyla silindi !")
+    }
+}
+
+function deleteTodoFromStorage(deleteTodo){
+    let todos = getTodosFromStorage();
+
+    todos.forEach(function(todo,index){
+        if(todo === deleteTodo){
+            todos.splice(index,1);
+        }
+    })
+    localStorage.setItem("todos",JSON.stringify(todos));
+}
+
+function loadAllTodosUI(){
+    let todos = getTodosFromStorage();
+    todos.forEach(function(todo){
+        addTodoUI(todo);
+    })
 }
 
 function addTodo(e){
